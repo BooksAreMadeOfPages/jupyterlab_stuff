@@ -1,4 +1,3 @@
-import pygame
 import math
 import numpy as np
 import IPython.display as ipd
@@ -26,25 +25,8 @@ class AudioBuffer:
 
 
     def makeSoundWithAudioBuffer(self):
-
-        if "JPY_PARENT_PID" in os.environ:
-            self.makeSoundWithAudioBuffer_ipd()
-        else:
-            self.makeSoundWithAudioBuffer_PyGame()
-
+        self.makeSoundWithAudioBuffer_ipd()
         
-    def makeSoundWithAudioBuffer_PyGame(self):
-        #the number of channels specified here is NOT 
-        #the channels talked about here http://www.pygame.org/docs/ref/mixer.html#pygame.mixer.get_num_channels
-        pygame.mixer.pre_init(self.sample_rate, -self.bits, 1)
-        pygame.init()
-        sound = pygame.sndarray.make_sound(self.audio_buffer)
-        sound.play()
-        
-        wait_time = int(self.N*self.delta_time +1)*1000
-        pygame.time.wait(wait_time)
-        pygame.quit()
-
     # serve per il notebook
     def makeSoundWithAudioBuffer_ipd(self):
         sound = ipd.Audio(self.audio_buffer, rate=self.sample_rate, autoplay=True)
